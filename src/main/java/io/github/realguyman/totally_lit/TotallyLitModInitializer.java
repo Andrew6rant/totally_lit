@@ -20,7 +20,7 @@ public class TotallyLitModInitializer implements ModInitializer {
         new BlockRegistry();
         new ItemRegistry();
         if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
-            System.out.println("[Totally Lit] Found teenycoal, registering additional blocks and items.");
+            System.out.println("[Totally Lit!] Found teenycoal, registering additional blocks and items.");
             new TeenyBlockRegistry();
             new TeenyItemRegistry();
         }

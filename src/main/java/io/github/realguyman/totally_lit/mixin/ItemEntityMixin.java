@@ -1,7 +1,10 @@
 package io.github.realguyman.totally_lit.mixin;
 
+import io.github.Andrew6rant.teenycoal.TeenyCoal;
 import io.github.realguyman.totally_lit.item.LitTorchItem;
 import io.github.realguyman.totally_lit.registry.ItemRegistry;
+import io.github.realguyman.totally_lit.registry.TeenyItemRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -39,6 +42,11 @@ public abstract class ItemEntityMixin extends Entity {
                 unlitVariant = ItemRegistry.UNLIT_LANTERN;
             } else if (itemStack.isOf(Items.JACK_O_LANTERN)) {
                 unlitVariant = Items.CARVED_PUMPKIN;
+            }
+            if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+                if (itemStack.isOf(TeenyCoal.TEENY_TORCH.asItem())) {
+                    unlitVariant = TeenyItemRegistry.UNLIT_TEENY_TORCH;
+                }
             }
 
             if (unlitVariant != null) {

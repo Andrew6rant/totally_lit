@@ -1,6 +1,7 @@
 {
   "block.totally_lit.unlit_lantern": "Unlit Lantern",
   "block.totally_lit.unlit_torch": "Unlit Torch",
+  "block.totally_lit.unlit_teeny_torch": "Unlit Teeny Torch",
   "text.autoconfig.totally_lit.category.campfires": "Campfires",
   "text.autoconfig.totally_lit.category.candles": "Candles",
   "text.autoconfig.totally_lit.category.jack_o_lanterns": "Jack o'Lanterns",

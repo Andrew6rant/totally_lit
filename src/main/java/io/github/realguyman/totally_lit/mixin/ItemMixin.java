@@ -1,8 +1,11 @@
 package io.github.realguyman.totally_lit.mixin;
 
+import io.github.Andrew6rant.teenycoal.TeenyCoal;
 import io.github.realguyman.totally_lit.TotallyLitModInitializer;
 import io.github.realguyman.totally_lit.item.LitTorchItem;
 import io.github.realguyman.totally_lit.registry.ItemRegistry;
+import io.github.realguyman.totally_lit.registry.TeenyItemRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -40,6 +43,15 @@ public class ItemMixin {
             } else if (stack.getItem() instanceof LitTorchItem) {
                 chance = TotallyLitModInitializer.getConfiguration().torchConfiguration.extinguishInRainChance;
                 item = ((LitTorchItem) stack.getItem()).getUnlitItem();
+            }
+            if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+                if (stack.isOf(TeenyCoal.TEENY_TORCH.asItem())) {
+                    chance = TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishInRainChance;
+                    item = TeenyItemRegistry.UNLIT_TEENY_TORCH;
+                } else if (stack.getItem() instanceof LitTorchItem) {
+                    chance = TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishInRainChance;
+                    item = ((LitTorchItem) stack.getItem()).getUnlitItem();
+                }
             }
 
             if (chance != null && ((player.isSubmergedInWater() || player.isSwimming()) || (player.isTouchingWater() && world.getRandom().nextInt(100) == 0) || (player.age % 940 == 0 && world.hasRain(player.getCameraBlockPos()) && world.getRandom().nextFloat() < chance))) {

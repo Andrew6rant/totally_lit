@@ -1,7 +1,9 @@
 package io.github.realguyman.totally_lit.mixin;
 
+import io.github.Andrew6rant.teenycoal.TeenyCoal;
 import io.github.realguyman.totally_lit.TotallyLitModInitializer;
 import io.github.realguyman.totally_lit.registry.BlockRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +29,11 @@ public class BlockMixin {
         if ((CampfireBlock.isLitCampfire(state) && (TotallyLitModInitializer.getConfiguration().campfireConfiguration.extinguishInRainChance > 0F)) || (AbstractCandleBlock.isLitCandle(state) && (TotallyLitModInitializer.getConfiguration().candleConfiguration.extinguishInRainChance > 0F || TotallyLitModInitializer.getConfiguration().candleConfiguration.extinguishOverTime)) || (state.isOf(Blocks.JACK_O_LANTERN) && (TotallyLitModInitializer.getConfiguration().jackOLanternConfiguration.extinguishInRainChance > 0F || TotallyLitModInitializer.getConfiguration().jackOLanternConfiguration.extinguishOverTime)) || (state.isOf(Blocks.LANTERN) && (TotallyLitModInitializer.getConfiguration().lanternConfiguration.extinguishInRainChance > 0F || TotallyLitModInitializer.getConfiguration().lanternConfiguration.extinguishOverTime)) || ((state.isOf(Blocks.TORCH) || state.isOf(Blocks.WALL_TORCH)) && (TotallyLitModInitializer.getConfiguration().torchConfiguration.extinguishInRainChance > 0F || TotallyLitModInitializer.getConfiguration().torchConfiguration.extinguishOverTime))) {
             cir.setReturnValue(true);
         }
+        if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+            if ((state.isOf(TeenyCoal.TEENY_TORCH) || state.isOf(TeenyCoal.TEENY_WALL_TORCH)) && (TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishInRainChance > 0F || TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishOverTime)) {
+                cir.setReturnValue(true);
+            }
+        }
     }
 
     @Inject(method = "onPlaced", at = @At("HEAD"))
@@ -40,6 +47,11 @@ public class BlockMixin {
     private void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfo ci) {
         if (!world.isClient() && (state.isIn(BlockTags.CANDLES) || state.isIn(BlockTags.CANDLE_CAKES) || state.isOf(Blocks.JACK_O_LANTERN) || state.isOf(Blocks.LANTERN) || state.isOf(Blocks.TORCH) || state.isOf(Blocks.WALL_TORCH))) {
             ((ServerWorld) world).getBlockTickScheduler().clearNextTicks(new BlockBox(pos));
+        }
+        if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+            if (!world.isClient() && (state.isOf(TeenyCoal.TEENY_TORCH) || state.isOf(TeenyCoal.TEENY_WALL_TORCH))) {
+                ((ServerWorld) world).getBlockTickScheduler().clearNextTicks(new BlockBox(pos));
+            }
         }
     }
 }

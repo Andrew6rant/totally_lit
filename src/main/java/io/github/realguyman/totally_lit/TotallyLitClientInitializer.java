@@ -11,10 +11,9 @@ import static io.github.realguyman.totally_lit.registry.TeenyBlockRegistry.*;
 public class TotallyLitClientInitializer implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), UNLIT_LANTERN, UNLIT_TORCH, UNLIT_WALL_TORCH);
         if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
-            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), UNLIT_LANTERN, UNLIT_TORCH, UNLIT_WALL_TORCH, UNLIT_TEENY_TORCH, UNLIT_TEENY_WALL_TORCH);
-        } else {
-            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), UNLIT_LANTERN, UNLIT_TORCH, UNLIT_WALL_TORCH);
+            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), UNLIT_TEENY_TORCH, UNLIT_TEENY_WALL_TORCH);
         }
     }
 }

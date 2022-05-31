@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:torch",
-    "minecraft:wall_torch"
+    "minecraft:wall_torch",
+    "teenycoal:teeny_torch",
+    "teenycoal:teeny_wall_torch"
   ]
 }

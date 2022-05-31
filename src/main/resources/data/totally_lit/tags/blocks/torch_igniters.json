@@ -6,6 +6,10 @@
     "minecraft:soul_torch",
     "minecraft:soul_wall_torch",
     "minecraft:torch",
-    "minecraft:wall_torch"
+    "minecraft:wall_torch",
+    "teenycoal:teeny_torch",
+    "teenycoal:teeny_wall_torch",
+    "teenycoal:teeny_soul_torch",
+    "teenycoal:teeny_soul_wall_torch"
   ]
 }

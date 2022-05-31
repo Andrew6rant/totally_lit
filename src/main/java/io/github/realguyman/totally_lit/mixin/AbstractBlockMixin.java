@@ -1,11 +1,14 @@
 package io.github.realguyman.totally_lit.mixin;
 
+import io.github.Andrew6rant.teenycoal.TeenyCoal;
 import io.github.realguyman.totally_lit.TotallyLitModInitializer;
 import io.github.realguyman.totally_lit.access.CampfireBlockEntityAccess;
 import io.github.realguyman.totally_lit.block.LitTorchBlock;
 import io.github.realguyman.totally_lit.block.LitWallTorchBlock;
 import io.github.realguyman.totally_lit.registry.BlockRegistry;
 import io.github.realguyman.totally_lit.registry.TagRegistry;
+import io.github.realguyman.totally_lit.registry.TeenyBlockRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CampfireBlockEntity;
@@ -93,6 +96,22 @@ public abstract class AbstractBlockMixin {
 
             ci.cancel();
         }
+        if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+            if (state.isIn(TagRegistry.EXTINGUISHABLE_TORCH_BLOCKS) || state.isOf(TeenyCoal.TEENY_TORCH) || state.isOf(TeenyCoal.TEENY_WALL_TORCH)) {
+                if (world.hasRain(pos) && random.nextFloat() < TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishInRainChance) {
+                    this.scheduledTick(state, world, pos, random);
+                } else if (TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.extinguishOverTime) {
+                    WorldTickScheduler<Block> scheduler = world.getBlockTickScheduler();
+                    Block block = state.getBlock();
+
+                    if (!scheduler.isQueued(pos, block) && !scheduler.isTicking(pos, block)) {
+                        world.createAndScheduleBlockTick(pos, block, TotallyLitModInitializer.getConfiguration().teenytorchConfiguration.burnDuration * 6_000);
+                    }
+                }
+
+                ci.cancel();
+            }
+        }
     }
 
     @Inject(method = "scheduledTick", at = @At("HEAD"))
@@ -115,6 +134,13 @@ public abstract class AbstractBlockMixin {
                 updated = world.setBlockState(pos, litTorch.getDefaultState());
             } else if (state.getBlock() instanceof LitWallTorchBlock litWallTorchBlock) {
                 updated = world.setBlockState(pos, litWallTorchBlock.getUnlitBlock().getDefaultState().with(Properties.FACING, state.get(Properties.FACING)));
+            }
+        }
+        if (FabricLoader.getInstance().isModLoaded("teenycoal")) {
+            if (state.isOf(TeenyCoal.TEENY_TORCH)) {
+                updated = world.setBlockState(pos, TeenyBlockRegistry.UNLIT_TEENY_TORCH.getDefaultState());
+            } else if (state.isOf(TeenyCoal.TEENY_WALL_TORCH)) {
+                updated = world.setBlockState(pos, TeenyBlockRegistry.UNLIT_TEENY_WALL_TORCH.getDefaultState().with(WallTorchBlock.FACING, state.get(WallTorchBlock.FACING)));
             }
         }
 

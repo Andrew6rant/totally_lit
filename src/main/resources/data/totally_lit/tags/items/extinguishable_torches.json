@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "minecraft:torch"
+    "minecraft:torch",
+    "teenycoal:teeny_torch"
   ]
 }
