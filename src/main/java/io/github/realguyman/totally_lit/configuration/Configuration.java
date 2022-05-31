@@ -26,4 +26,8 @@ public class Configuration extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Category("torches")
     @ConfigEntry.Gui.TransitiveObject
     public TorchConfiguration torchConfiguration = new TorchConfiguration();
+
+    @ConfigEntry.Category("teeny_torches")
+    @ConfigEntry.Gui.TransitiveObject
+    public TeenyTorchConfiguration teenytorchConfiguration = new TeenyTorchConfiguration();
 }

@@ -9,6 +9,7 @@ targetCompatibility = JavaVersion.VERSION_17
 repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -17,6 +18,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api}"
     modImplementation "com.terraformersmc:modmenu:${project.mod_menu}"
+    modImplementation "com.github.Andrew6rant:Teeny-Coal:${project.teeny_coal}"
 
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}") {
         exclude(group: "net.fabricmc.fabric-api")
@@ -58,6 +60,7 @@ modrinth {
     gameVersions = [project.minecraft]
     dependencies = [
             new ModDependency("P7dR8mSH", "required"),
-            new ModDependency("mOgUt4GM", "optional")
+            new ModDependency("mOgUt4GM", "optional"),
+            new ModDependency("8dyofj7U", "optional")
     ]
 }

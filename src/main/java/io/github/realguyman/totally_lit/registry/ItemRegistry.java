@@ -2,6 +2,8 @@ package io.github.realguyman.totally_lit.registry;
 
 import io.github.realguyman.totally_lit.TotallyLitModInitializer;
 import io.github.realguyman.totally_lit.item.UnlitTorchItem;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
